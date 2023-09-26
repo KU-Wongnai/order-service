@@ -28,16 +28,22 @@ Start the server
 mvn spring-boot:run
 ```
 
+## Technologies used
+
+- [Redis](https://redis.io/) - Used to store cart items
+
 ## API
 
-service running at http://localhost:8094
+Service running at http://localhost:8094
+
+Currently all routes are required authentication using JWT.
 
 ### Cart
 
 Add item to cart
 
 ```sh
-POST -> /cart?userId=1
+POST -> /cart
 ```
 
 ```json
@@ -50,5 +56,11 @@ POST -> /cart?userId=1
 View cart items
 
 ```sh
-GET -> /cart?userId=1
+GET -> /cart
+```
+
+Remove items from cart
+
+```sh
+DELETE -> /cart?menuId=1
 ```
