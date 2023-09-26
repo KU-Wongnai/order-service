@@ -7,7 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import lombok.Data;
 
 @Entity
@@ -28,7 +27,6 @@ public class OrderItem {
   private double price;
 
   @ManyToOne
-  @MapsId("orderId")
   @JoinColumn(name = "order_id")
   private PurchaseOrder order;
 

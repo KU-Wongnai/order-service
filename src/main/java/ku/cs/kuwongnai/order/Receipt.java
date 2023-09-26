@@ -1,5 +1,6 @@
 package ku.cs.kuwongnai.order;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,7 +30,7 @@ public class Receipt {
    * from different restaurants.
    */
   @OneToMany(mappedBy = "receipt")
-  private List<PurchaseOrder> orders;
+  private List<PurchaseOrder> orders = new ArrayList<>();
 
   private String deliveryAddress;
 

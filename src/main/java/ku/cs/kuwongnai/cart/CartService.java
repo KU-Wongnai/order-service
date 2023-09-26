@@ -6,9 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.annotation.PostConstruct;
+import ku.cs.kuwongnai.restaurant.Menu;
+import ku.cs.kuwongnai.restaurant.MenuRepository;
 
 @Service
 public class CartService {
@@ -19,12 +23,20 @@ public class CartService {
 
   private HashOperations<String, Long, CartItem> hashOperations;
 
+  @Autowired
+  private MenuRepository menuRepository;
+
   @PostConstruct
   private void init() {
     this.hashOperations = redisTemplate.opsForHash();
   }
 
   public void addToCart(String userId, CartItem cartItem) {
+    Menu menu = menuRepository.findById(cartItem.getMenuId()).orElse(null);
+    if (menu == null) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Menu was not exist");
+    }
+
     String cartKey = getCartKey(userId);
     hashOperations.put(cartKey, cartItem.getMenuId(), cartItem);
   }
