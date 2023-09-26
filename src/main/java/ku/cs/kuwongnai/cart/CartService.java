@@ -51,6 +51,11 @@ public class CartService {
     hashOperations.delete(cartKey, menuId);
   }
 
+  public void clearCart(String userId) {
+    String cartKey = getCartKey(userId);
+    redisTemplate.delete(cartKey);
+  }
+
   private String getCartKey(String userId) {
     return CART_KEY_PREFIX + userId;
   }

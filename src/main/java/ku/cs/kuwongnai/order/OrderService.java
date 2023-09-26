@@ -88,6 +88,9 @@ public class OrderService {
       orderItemRepository.save(item);
     }
 
+    // Clear all items inside the cart
+    cartService.clearCart(userId);
+
     // Make a payment by return an url that redirect to the payment page
     System.out.println("Make a payment");
   }
