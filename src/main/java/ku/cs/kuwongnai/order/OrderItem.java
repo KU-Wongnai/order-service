@@ -2,6 +2,8 @@ package ku.cs.kuwongnai.order;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -26,6 +28,7 @@ public class OrderItem {
    */
   private double price;
 
+  @JsonBackReference
   @ManyToOne
   @JoinColumn(name = "order_id")
   private PurchaseOrder order;

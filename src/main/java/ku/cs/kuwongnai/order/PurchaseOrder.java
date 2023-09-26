@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -29,6 +32,7 @@ public class PurchaseOrder {
   // TODO: Change to `Restaurant` entity
   private Long restaurantId;
 
+  @JsonManagedReference
   @OneToMany(mappedBy = "order")
   private List<OrderItem> orderItems = new ArrayList<>();
 
@@ -39,6 +43,7 @@ public class PurchaseOrder {
   @JoinColumn(name = "delivery_id", referencedColumnName = "id")
   private Delivery delivery;
 
+  @JsonBackReference
   @ManyToOne
   @JoinColumn(name = "receipt_id")
   private Receipt receipt;

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -29,6 +31,7 @@ public class Receipt {
    * Receipt has many orders. This happened when user order
    * from different restaurants.
    */
+  @JsonManagedReference
   @OneToMany(mappedBy = "receipt")
   private List<PurchaseOrder> orders = new ArrayList<>();
 

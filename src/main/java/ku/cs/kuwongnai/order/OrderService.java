@@ -3,6 +3,7 @@ package ku.cs.kuwongnai.order;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -95,4 +96,22 @@ public class OrderService {
     System.out.println("Make a payment");
   }
 
+  public List<Receipt> getAllMyReceipts(Long userId) {
+    return receiptRepository.findByUserId(userId);
+  }
+
+  public Receipt getMyReceipt(Long userId, UUID receiptId) {
+
+    Receipt receipt = receiptRepository.findById(receiptId).orElse(null);
+
+    if (receipt == null) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Receipt with the given id not found");
+    }
+
+    if (receipt.getUserId() != userId) {
+      throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You don't have permission to view this content");
+    }
+
+    return receipt;
+  }
 }
