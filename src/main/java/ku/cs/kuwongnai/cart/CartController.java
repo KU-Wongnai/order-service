@@ -1,6 +1,6 @@
 package ku.cs.kuwongnai.cart;
 
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,19 +18,19 @@ public class CartController {
   private CartService cartService;
 
   @PostMapping
-  public void addToCart(@RequestParam String userId, @RequestBody Cart cartItem) {
+  public void addToCart(@RequestParam String userId, @RequestBody CartItem cartItem) {
     cartService.addToCart(userId, cartItem);
     System.out.println("Add to cart: " + cartItem);
   }
 
   @GetMapping
-  public Cart viewCart(@RequestParam String userId) {
+  public List<CartItem> viewCart(@RequestParam String userId) {
     return cartService.getCartItems(userId);
   }
 
   @DeleteMapping
-  public void removeFromCart(@RequestParam String userId) {
-    cartService.removeFromCart(userId);
+  public void removeFromCart(@RequestParam String userId, @RequestParam Long menuId) {
+    cartService.removeFromCart(userId, menuId);
   }
 
 }

@@ -1,30 +1,42 @@
 package ku.cs.kuwongnai.cart;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import ku.cs.kuwongnai.redis.RedisService;
+import jakarta.annotation.PostConstruct;
 
 @Service
 public class CartService {
   private static final String CART_KEY_PREFIX = "user:cart:";
 
   @Autowired
-  private RedisService<String, Cart> redisService;
+  private RedisTemplate<String, Object> redisTemplate;
 
-  public void addToCart(String userId, Cart cartItem) {
-    String cartKey = getCartKey(userId);
-    redisService.saveData(cartKey, cartItem);
+  private HashOperations<String, Long, CartItem> hashOperations;
+
+  @PostConstruct
+  private void init() {
+    this.hashOperations = redisTemplate.opsForHash();
   }
 
-  public Cart getCartItems(String userId) {
+  public void addToCart(String userId, CartItem cartItem) {
     String cartKey = getCartKey(userId);
-    return redisService.getData(cartKey);
+    hashOperations.put(cartKey, cartItem.getMenuId(), cartItem);
   }
 
-  public void removeFromCart(String userId) {
+  public List<CartItem> getCartItems(String userId) {
     String cartKey = getCartKey(userId);
-    redisService.removeData(cartKey);
+    return new ArrayList<CartItem>(hashOperations.entries(cartKey).values());
+  }
+
+  public void removeFromCart(String userId, Long menuId) {
+    String cartKey = getCartKey(userId);
+    hashOperations.delete(cartKey, menuId);
   }
 
   private String getCartKey(String userId) {
