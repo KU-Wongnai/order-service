@@ -45,7 +45,7 @@ public class PurchaseOrder {
 
   @JsonBackReference
   @ManyToOne
-  @JoinColumn(name = "receipt_id")
-  private Receipt receipt;
+  @JoinColumn(name = "bill_id", referencedColumnName = "id")
+  private Bill bill;
 
 }

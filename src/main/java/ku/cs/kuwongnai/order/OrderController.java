@@ -26,16 +26,16 @@ public class OrderController {
     orderService.checkout(userId); // TODO: return an url to the payment page
   }
 
-  @GetMapping("/receipts")
-  public List<Receipt> getAllMyReceipts(@AuthenticationPrincipal Jwt jwt) {
+  @GetMapping("/bills")
+  public List<Bill> getAllMyBill(@AuthenticationPrincipal Jwt jwt) {
     String userId = (String) jwt.getClaims().get("sub");
-    return orderService.getAllMyReceipts(Long.parseLong(userId));
+    return orderService.getAllMyBills(Long.parseLong(userId));
   }
 
-  @GetMapping("/receipts/{receiptId}")
-  public Receipt getMyReceipt(@AuthenticationPrincipal Jwt jwt, @PathVariable UUID receiptId) {
+  @GetMapping("/bills/{billId}")
+  public Bill getMyReceipt(@AuthenticationPrincipal Jwt jwt, @PathVariable UUID billId) {
     String userId = (String) jwt.getClaims().get("sub");
-    return orderService.getMyReceipt(Long.parseLong(userId), receiptId);
+    return orderService.getMyBill(Long.parseLong(userId), billId);
   }
 
   // TODO: Add webhook to receive payment status after the purchased

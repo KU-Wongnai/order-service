@@ -24,7 +24,7 @@ public class OrderService {
   private CartService cartService;
 
   @Autowired
-  private ReceiptRepository receiptRepository;
+  private BillRepository billRepository;
 
   @Autowired
   private RestaurantRepository restaurantRepository;
@@ -44,11 +44,11 @@ public class OrderService {
     List<CartItem> cartItems = cartService.getCartItems(userId);
 
     Map<Restaurant, PurchaseOrder> restaurantOrder = new HashMap<>();
-    Receipt receipt = new Receipt();
+    Bill bill = new Bill();
 
-    receipt.setUserId(Long.parseLong(userId));
+    bill.setUserId(Long.parseLong(userId));
     // Create a receipt for this orders
-    receipt = receiptRepository.save(receipt);
+    bill = billRepository.save(bill);
 
     // Create orders with order items base on the item in cart, for every
     // restaurants user order
@@ -77,7 +77,7 @@ public class OrderService {
 
         order = new PurchaseOrder();
         order.setRestaurantId(restaurant.getId());
-        order.setReceipt(receipt);
+        order.setBill(bill);
         purchaseOrderRepository.save(order);
 
         restaurantOrder.put(restaurant, order);
@@ -96,22 +96,22 @@ public class OrderService {
     System.out.println("Make a payment");
   }
 
-  public List<Receipt> getAllMyReceipts(Long userId) {
-    return receiptRepository.findByUserId(userId);
+  public List<Bill> getAllMyBills(Long userId) {
+    return billRepository.findByUserId(userId);
   }
 
-  public Receipt getMyReceipt(Long userId, UUID receiptId) {
+  public Bill getMyBill(Long userId, UUID receiptId) {
 
-    Receipt receipt = receiptRepository.findById(receiptId).orElse(null);
+    Bill bill = billRepository.findById(receiptId).orElse(null);
 
-    if (receipt == null) {
+    if (bill == null) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Receipt with the given id not found");
     }
 
-    if (receipt.getUserId() != userId) {
+    if (bill.getUserId() != userId) {
       throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You don't have permission to view this content");
     }
 
-    return receipt;
+    return bill;
   }
 }

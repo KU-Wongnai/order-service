@@ -16,7 +16,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Receipt {
+public class Bill {
 
   @Id
   @GeneratedValue
@@ -32,7 +32,7 @@ public class Receipt {
    * from different restaurants.
    */
   @JsonManagedReference
-  @OneToMany(mappedBy = "receipt")
+  @OneToMany(mappedBy = "bill")
   private List<PurchaseOrder> orders = new ArrayList<>();
 
   private String deliveryAddress;

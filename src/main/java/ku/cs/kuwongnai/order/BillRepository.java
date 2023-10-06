@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
-public interface ReceiptRepository extends JpaRepository<Receipt, UUID> {
+public interface BillRepository extends JpaRepository<Bill, UUID> {
 
-  public List<Receipt> findByUserId(Long userId);
+  public List<Bill> findByUserId(Long userId);
 }
