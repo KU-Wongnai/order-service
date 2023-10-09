@@ -1,5 +1,7 @@
 package ku.cs.kuwongnai.restaurant;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -15,5 +17,6 @@ public class Menu {
   private double price;
 
   @ManyToOne
+  @JsonBackReference
   private Restaurant restaurant;
 }

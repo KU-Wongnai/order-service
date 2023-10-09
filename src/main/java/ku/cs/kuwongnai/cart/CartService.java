@@ -41,9 +41,24 @@ public class CartService {
     hashOperations.put(cartKey, cartItem.getMenuId(), cartItem);
   }
 
-  public List<CartItem> getCartItems(String userId) {
+  public List<CartResponse> getCartItems(String userId) {
     String cartKey = getCartKey(userId);
-    return new ArrayList<CartItem>(hashOperations.entries(cartKey).values());
+
+    List<CartItem> cartItems = hashOperations.values(cartKey);
+    List<CartResponse> cartResponses = new ArrayList<CartResponse>();
+
+    for (CartItem cartItem : cartItems) {
+      Menu menu = menuRepository.findById(cartItem.getMenuId()).orElse(null);
+      if (menu == null) {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Menu was not exist");
+      }
+      CartResponse cartResponse = new CartResponse();
+      cartResponse.setMenu(menu);
+      cartResponse.setQuantity(cartItem.getQuantity());
+      cartResponses.add(cartResponse);
+    }
+
+    return cartResponses;
   }
 
   public void removeFromCart(String userId, Long menuId) {

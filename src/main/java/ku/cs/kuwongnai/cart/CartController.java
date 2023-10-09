@@ -28,7 +28,7 @@ public class CartController {
   }
 
   @GetMapping
-  public List<CartItem> viewCart(@AuthenticationPrincipal Jwt jwt) {
+  public List<CartResponse> viewCart(@AuthenticationPrincipal Jwt jwt) {
     String userId = (String) jwt.getClaims().get("sub");
     return cartService.getCartItems(userId);
   }
