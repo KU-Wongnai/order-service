@@ -28,12 +28,14 @@ public class Bill {
   private UserPurchaseStatus status = UserPurchaseStatus.PROCESSING;
 
   /**
-   * Receipt has many orders. This happened when user order
+   * Bill has many orders. This happened when user order
    * from different restaurants.
    */
   @JsonManagedReference
   @OneToMany(mappedBy = "bill")
   private List<PurchaseOrder> orders = new ArrayList<>();
+
+  private double totalPrice;
 
   private String deliveryAddress;
 

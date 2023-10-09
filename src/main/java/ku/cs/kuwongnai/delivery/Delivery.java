@@ -2,6 +2,7 @@ package ku.cs.kuwongnai.delivery;
 
 import java.util.UUID;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -23,10 +24,13 @@ public class Delivery {
   /**
    * The rider who delivers food to users.
    */
-  private Long riderId;
+  @Nullable
+  private Long riderId = null;
+
+  private String deliveryAddress;
 
   @Enumerated(EnumType.STRING)
-  private DeliveryStatus status;
+  private DeliveryStatus status = DeliveryStatus.PENDING;
 
   @OneToOne
   @JoinColumn(name = "order_id", referencedColumnName = "id")

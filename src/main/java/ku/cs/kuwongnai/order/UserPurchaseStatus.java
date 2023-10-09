@@ -11,9 +11,9 @@ public enum UserPurchaseStatus {
   /**
    * To differentiate between purchases that have
    * been fully processed, you can use a
-   * "Completed" status.
+   * "PAID" status.
    */
-  COMPLETED,
+  PAID,
 
   /**
    * This status can represent purchases that
