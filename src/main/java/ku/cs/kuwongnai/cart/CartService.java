@@ -61,6 +61,14 @@ public class CartService {
     return cartResponses;
   }
 
+  public List<CartItem> getCartItemsRaw(String userId) {
+    String cartKey = getCartKey(userId);
+
+    List<CartItem> cartItems = hashOperations.values(cartKey);
+
+    return cartItems;
+  }
+
   public void removeFromCart(String userId, Long menuId) {
     String cartKey = getCartKey(userId);
     hashOperations.delete(cartKey, menuId);

@@ -51,7 +51,7 @@ public class OrderService {
   public Bill placeOrder(String userId, String deliveryAddress) {
 
     // Retrieve items from a cart
-    List<CartItem> cartItems = cartService.getCartItems(userId);
+    List<CartItem> cartItems = cartService.getCartItemsRaw(userId);
 
     if (cartItems.size() == 0) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cart is empty");
