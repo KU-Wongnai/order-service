@@ -149,25 +149,22 @@ public class OrderService {
   }
 
   public void confirmOrder(String userId, Bill bill) {
-    bill.setStatus(UserPurchaseStatus.PAID);
-    cartService.clearCart(userId);
-
-    billRepository.save(bill);
-
-    Bill record = billRepository.findById(bill.getId()).orElse(null);
-    System.out.println(record);
+    Bill record = billRepository.findById(bill.getId()).orElseThrow();
+    record.setStatus(UserPurchaseStatus.PAID);
+    record = billRepository.save(record);
 
     for (PurchaseOrder order : record.getOrders()) {
-      System.out.println(order);
       order.setStatus(OrderStatus.PREPARING);
-      purchaseOrderRepository.save(order);
 
       Delivery delivery = new Delivery();
       delivery.setOrder(order);
-      delivery.setDeliveryAddress(bill.getDeliveryAddress());
+      delivery.setDeliveryAddress(record.getDeliveryAddress());
 
       deliveryRepository.save(delivery);
     }
+
+    cartService.clearCart(userId);
+
   }
 
   public void cancelOrder(Bill bill) {
