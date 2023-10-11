@@ -34,12 +34,6 @@ public class OrderService {
   private RestaurantRepository restaurantRepository;
 
   @Autowired
-  private PurchaseOrderRepository purchaseOrderRepository;
-
-  @Autowired
-  private OrderItemRepository orderItemRepository;
-
-  @Autowired
   private MenuRepository menuRepository;
 
   @Autowired
@@ -83,7 +77,7 @@ public class OrderService {
 
       OrderItem item = new OrderItem();
 
-      item.setMenuId(cartItem.getMenuId());
+      item.setMenu(menu);
       item.setQuantity(cartItem.getQuantity());
       item.setPrice(menu.getPrice());
 

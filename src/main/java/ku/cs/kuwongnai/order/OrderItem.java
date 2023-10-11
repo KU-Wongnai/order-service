@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import ku.cs.kuwongnai.restaurant.Menu;
 import lombok.Data;
 
 @Entity
@@ -19,7 +20,10 @@ public class OrderItem {
   @GeneratedValue
   private UUID id;
 
-  private Long menuId;
+  // @JsonBackReference
+  @ManyToOne
+  @JoinColumn(name = "menu_id", referencedColumnName = "id")
+  private Menu menu;
 
   private int quantity;
 
