@@ -13,5 +13,9 @@ public enum DeliveryStatus {
    * The delivery has been successfully completed and the order has been
    * delivered.
    */
-  DELIVERED
+  DELIVERED,
+  /**
+   * The delivery has been cancelled.
+   */
+  CANCELLED
 }
