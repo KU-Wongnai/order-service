@@ -3,6 +3,7 @@ package ku.cs.kuwongnai.delivery;
 import java.util.UUID;
 
 import jakarta.annotation.Nullable;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -32,7 +33,7 @@ public class Delivery {
   @Enumerated(EnumType.STRING)
   private DeliveryStatus status = DeliveryStatus.PENDING;
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "order_id", referencedColumnName = "id")
   private PurchaseOrder order;
 

@@ -16,6 +16,11 @@ public class Restaurant {
   @Id
   private Long id;
 
+  private String name;
+  private String location;
+  private String contactInfo;
+  private String image;
+
   @OneToMany(mappedBy = "restaurant")
   @JsonManagedReference
   private List<Menu> menu;

@@ -14,7 +14,9 @@ public class Menu {
   @Id
   private Long id;
 
+  private String name;
   private double price;
+  private String image;
 
   @ManyToOne
   @JsonBackReference
