@@ -20,14 +20,6 @@ public class RestaurantService {
   }
 
   public Restaurant updateRestaurant(Restaurant restaurant) {
-    Restaurant record = restaurantRepository.findById(restaurant.getId()).orElse(null);
-
-    if (record == null) {
-      return null;
-    }
-
-    record.setId(restaurant.getId());
-
     return restaurantRepository.save(restaurant);
   }
 
