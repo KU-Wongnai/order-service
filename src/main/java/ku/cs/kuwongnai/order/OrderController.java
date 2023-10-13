@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -53,6 +54,12 @@ public class OrderController {
   public Bill getMyReceipt(@AuthenticationPrincipal Jwt jwt, @PathVariable UUID billId) {
     String userId = (String) jwt.getClaims().get("sub");
     return orderService.getMyBill(Long.parseLong(userId), billId);
+  }
+
+  @GetMapping("/orders/{orderID}")
+  public PurchaseOrder updateOrderStatus(@AuthenticationPrincipal Jwt jwt, @PathVariable UUID orderID,
+      @RequestParam OrderStatus status) {
+    return orderService.updateOrderStatus(orderID, status);
   }
 
 }

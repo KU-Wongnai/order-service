@@ -40,6 +40,9 @@ public class OrderService {
   private DeliveryRepository deliveryRepository;
 
   @Autowired
+  private PurchaseOrderRepository orderRepository;
+
+  @Autowired
   private WebClient webClient;
 
   public Bill placeOrder(String userId, String deliveryAddress) {
@@ -148,7 +151,6 @@ public class OrderService {
     record = billRepository.save(record);
 
     for (PurchaseOrder order : record.getOrders()) {
-      order.setStatus(OrderStatus.PREPARING);
 
       Delivery delivery = new Delivery();
       delivery.setOrder(order);
@@ -166,4 +168,25 @@ public class OrderService {
     billRepository.save(bill);
   }
 
+  public PurchaseOrder updateOrderStatus(UUID orderId, OrderStatus status) {
+    PurchaseOrder order = orderRepository.findById(orderId).orElseThrow();
+
+    // Status cannot go back to previous status
+    // (pending -> preparing -> received -> completed)
+    if (order.getStatus() == OrderStatus.COMPLETED) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order is already completed. Cannot change back.");
+    }
+
+    if (order.getStatus() == OrderStatus.PREPARING
+        && (status == OrderStatus.PENDING || status == OrderStatus.RECEIVED)) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order is already preparing. Cannot change back.");
+    }
+
+    if (order.getStatus() == OrderStatus.RECEIVED && status == OrderStatus.PENDING) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Order is already received. Cannot change back.");
+    }
+
+    order.setStatus(status);
+    return orderRepository.save(order);
+  }
 }

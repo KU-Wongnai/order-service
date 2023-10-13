@@ -18,10 +18,5 @@ public enum OrderStatus {
   /**
    * The order is prepared and ready for delivery.
    */
-  READY_FOR_DELIVERY,
-
-  /**
-   * The order has been delivered to the customer.
-   */
-  DELIVERED
+  COMPLETED,
 }
