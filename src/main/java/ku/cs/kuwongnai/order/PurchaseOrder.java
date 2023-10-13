@@ -23,6 +23,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import ku.cs.kuwongnai.delivery.Delivery;
+import ku.cs.kuwongnai.restaurant.Restaurant;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -35,8 +36,10 @@ public class PurchaseOrder {
   @GeneratedValue
   private UUID id;
 
-  // TODO: Change to `Restaurant` entity
-  private Long restaurantId;
+  // @JsonBackReference
+  @ManyToOne
+  @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
+  private Restaurant restaurant;
 
   @JsonManagedReference
   @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)

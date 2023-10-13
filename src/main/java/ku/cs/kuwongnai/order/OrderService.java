@@ -92,7 +92,7 @@ public class OrderService {
       if (order == null) {
 
         order = new PurchaseOrder();
-        order.setRestaurantId(restaurant.getId());
+        order.setRestaurant(restaurant);
         order.setBill(bill);
         bill.getOrders().add(order);
 
