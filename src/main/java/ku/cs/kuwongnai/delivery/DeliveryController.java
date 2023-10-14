@@ -35,6 +35,17 @@ public class DeliveryController {
     return deliveryService.getAllDeliveryForMe(riderId);
   }
 
+  @GetMapping("/{deliveryId}")
+  public Delivery getDelivery(@PathVariable UUID deliveryId) {
+    return deliveryService.getDelivery(deliveryId);
+  }
+
+  @GetMapping("/me/{status}")
+  public List<Delivery> getAllDeliveryForMe(@AuthenticationPrincipal Jwt jwt, @PathVariable DeliveryStatus status) {
+    Long riderId = Long.parseLong((String) jwt.getClaim("sub"));
+    return deliveryService.getAllDeliveryForMe(riderId, status);
+  }
+
   @PostMapping("/{deliveryId}/assign")
   public Delivery assignDelivery(@AuthenticationPrincipal Jwt jwt, @PathVariable UUID deliveryId) {
     Long riderId = Long.parseLong((String) jwt.getClaim("sub"));

@@ -26,6 +26,10 @@ public class DeliveryService {
     return deliveryRepository.findByRiderId(riderId);
   }
 
+  public List<Delivery> getAllDeliveryForMe(Long riderId, DeliveryStatus status) {
+    return deliveryRepository.findByRiderIdAndStatus(riderId, status);
+  }
+
   public List<Delivery> getAllDelivery() {
     return deliveryRepository.findAll();
   }
@@ -44,13 +48,14 @@ public class DeliveryService {
     }
 
     // Check if this rider is already assigned to another delivery order
-    List<Delivery> deliveries = deliveryRepository.findByRiderId(riderId);
-    for (Delivery d : deliveries) {
-      if (d.getStatus() != DeliveryStatus.DELIVERED) {
-        throw new ResponseStatusException(HttpStatus.CONFLICT,
-            "Rider is already assigned to another delivery. Please complete that delivery first before assigning a new one.");
-      }
-    }
+    // List<Delivery> deliveries = deliveryRepository.findByRiderId(riderId);
+    // for (Delivery d : deliveries) {
+    // if (d.getStatus() != DeliveryStatus.DELIVERED) {
+    // throw new ResponseStatusException(HttpStatus.CONFLICT,
+    // "Rider is already assigned to another delivery. Please complete that delivery
+    // first before assigning a new one.");
+    // }
+    // }
 
     // Assign the delivery to the rider
     delivery.setRiderId(riderId);

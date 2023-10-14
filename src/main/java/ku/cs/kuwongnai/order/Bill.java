@@ -17,7 +17,10 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import ku.cs.kuwongnai.user.User;
 import lombok.Data;
 
 @Entity
@@ -28,7 +31,9 @@ public class Bill {
   @GeneratedValue
   private UUID id;
 
-  private Long userId;
+  @ManyToOne
+  @JoinColumn(name = "user_id", referencedColumnName = "id")
+  private User user;
 
   @Enumerated(EnumType.STRING)
   private UserPurchaseStatus status = UserPurchaseStatus.PROCESSING;
@@ -44,6 +49,7 @@ public class Bill {
   private double totalPrice;
 
   private String deliveryAddress;
+  private String contactInfo;
 
   @CreationTimestamp
   @Column(name = "created_at", nullable = false, insertable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

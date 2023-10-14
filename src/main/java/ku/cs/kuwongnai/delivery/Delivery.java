@@ -29,6 +29,7 @@ public class Delivery {
   private Long riderId = null;
 
   private String deliveryAddress;
+  private String contactInfo;
 
   @Enumerated(EnumType.STRING)
   private DeliveryStatus status = DeliveryStatus.PENDING;

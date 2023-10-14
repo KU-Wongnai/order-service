@@ -20,6 +20,8 @@ import ku.cs.kuwongnai.restaurant.Menu;
 import ku.cs.kuwongnai.restaurant.MenuRepository;
 import ku.cs.kuwongnai.restaurant.Restaurant;
 import ku.cs.kuwongnai.restaurant.RestaurantRepository;
+import ku.cs.kuwongnai.user.User;
+import ku.cs.kuwongnai.user.UserRepository;
 
 @Service
 public class OrderService {
@@ -43,9 +45,12 @@ public class OrderService {
   private PurchaseOrderRepository orderRepository;
 
   @Autowired
+  private UserRepository userRepository;
+
+  @Autowired
   private WebClient webClient;
 
-  public Bill placeOrder(String userId, String deliveryAddress) {
+  public Bill placeOrder(String userId, PaymentRequest paymentRequest) {
 
     // Retrieve items from a cart
     List<CartItem> cartItems = cartService.getCartItemsRaw(userId);
@@ -57,8 +62,11 @@ public class OrderService {
     Map<Restaurant, PurchaseOrder> restaurantOrder = new HashMap<>();
     Bill bill = new Bill();
 
-    bill.setUserId(Long.parseLong(userId));
-    bill.setDeliveryAddress(deliveryAddress);
+    User user = userRepository.findById(Long.parseLong(userId)).orElseThrow();
+
+    bill.setUser(user);
+    bill.setDeliveryAddress(paymentRequest.getDeliveryAddress());
+    bill.setContactInfo(paymentRequest.getPhoneNumber());
     // Create a receipt for this orders
     bill = billRepository.save(bill);
 
@@ -94,6 +102,7 @@ public class OrderService {
         order = new PurchaseOrder();
         order.setRestaurant(restaurant);
         order.setBill(bill);
+        order.setUser(user);
         bill.getOrders().add(order);
 
         restaurantOrder.put(restaurant, order);
@@ -123,7 +132,7 @@ public class OrderService {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Receipt with the given id not found");
     }
 
-    if (bill.getUserId() != userId) {
+    if (bill.getUser().getId() != userId) {
       throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You don't have permission to view this content");
     }
 
@@ -155,6 +164,7 @@ public class OrderService {
       Delivery delivery = new Delivery();
       delivery.setOrder(order);
       delivery.setDeliveryAddress(record.getDeliveryAddress());
+      delivery.setContactInfo(record.getContactInfo());
 
       deliveryRepository.save(delivery);
     }

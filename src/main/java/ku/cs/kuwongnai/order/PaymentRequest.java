@@ -3,6 +3,7 @@ package ku.cs.kuwongnai.order;
 import java.util.UUID;
 
 import io.micrometer.common.lang.Nullable;
+import jakarta.annotation.Nonnull;
 import lombok.Data;
 
 @Data
@@ -31,7 +32,11 @@ public class PaymentRequest {
   @Nullable
   private Double amount;
 
+  @Nonnull
   private String deliveryAddress;
+
+  @Nonnull
+  private String phoneNumber;
 
   /**
    * The bill id

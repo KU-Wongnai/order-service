@@ -27,7 +27,7 @@ public class OrderController {
   public void checkout(@AuthenticationPrincipal Jwt jwt, @RequestBody PaymentRequest paymentRequest) {
     String userId = (String) jwt.getClaims().get("sub");
 
-    Bill bill = orderService.placeOrder(userId, paymentRequest.getDeliveryAddress());
+    Bill bill = orderService.placeOrder(userId, paymentRequest);
 
     System.out.println(paymentRequest);
 

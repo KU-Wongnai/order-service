@@ -24,6 +24,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import ku.cs.kuwongnai.delivery.Delivery;
 import ku.cs.kuwongnai.restaurant.Restaurant;
+import ku.cs.kuwongnai.user.User;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -56,6 +57,10 @@ public class PurchaseOrder {
   @ManyToOne
   @JoinColumn(name = "bill_id", referencedColumnName = "id")
   private Bill bill;
+
+  @ManyToOne
+  @JoinColumn(name = "user_id", referencedColumnName = "id")
+  private User user;
 
   @CreationTimestamp
   @Column(name = "created_at", nullable = false, insertable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
