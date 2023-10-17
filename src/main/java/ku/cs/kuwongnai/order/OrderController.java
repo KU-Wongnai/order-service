@@ -62,4 +62,15 @@ public class OrderController {
     return orderService.updateOrderStatus(orderID, status);
   }
 
+  @GetMapping("/orders/restaurant/{RestaurantID}")
+  public List<PurchaseOrder> getRestaurantOrders(@AuthenticationPrincipal Jwt jwt,
+      @PathVariable Long RestaurantID) {
+      return orderService.getRestaurantOrders(RestaurantID);
+  }
+
+  @GetMapping("/orders")
+  public List<PurchaseOrder> getAllOrders(@AuthenticationPrincipal Jwt jwt) {
+      return orderService.getAllOrders();
+  }
+
 }

@@ -199,4 +199,12 @@ public class OrderService {
     order.setStatus(status);
     return orderRepository.save(order);
   }
+
+  public List<PurchaseOrder> getRestaurantOrders(Long restaurantID) {
+      return orderRepository.findByRestaurantId(restaurantID);
+  }
+
+  public List<PurchaseOrder> getAllOrders() {
+    return orderRepository.findAll();
+  }
 }
