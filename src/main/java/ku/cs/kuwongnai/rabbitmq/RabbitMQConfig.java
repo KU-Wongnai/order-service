@@ -37,6 +37,14 @@ public class RabbitMQConfig {
   private final String MENU_UPDATED_ROUTING_KEY = "menu.updated";
   private final String MENU_DELETED_ROUTING_KEY = "menu.deleted";
 
+  private final String MENU_OPTION_TOPIC_EXCHANGE = "events.menuOption";
+  private final String MENU_OPTION_CREATED_QUEUE = "menuOption.created.queue";
+  private final String MENU_OPTION_UPDATED_QUEUE = "menuOption.updated.queue";
+  private final String MENU_OPTION_DELETED_QUEUE = "menuOption.deleted.queue";
+  private final String MENU_OPTION_CREATED_ROUTING_KEY = "menuOption.created";
+  private final String MENU_OPTION_UPDATED_ROUTING_KEY = "menuOption.updated";
+  private final String MENU_OPTION_DELETED_ROUTING_KEY = "menuOption.deleted";
+
   @Bean
   public TopicExchange userTopic() {
     return new TopicExchange(USER_TOPIC_EXCHANGE);
@@ -50,6 +58,11 @@ public class RabbitMQConfig {
   @Bean
   public TopicExchange menuTopic() {
     return new TopicExchange(MENU_TOPIC_EXCHANGE);
+  }
+
+  @Bean
+  public TopicExchange menuOptionTopic() {
+    return new TopicExchange(MENU_OPTION_TOPIC_EXCHANGE);
   }
 
   @Bean
@@ -93,6 +106,21 @@ public class RabbitMQConfig {
   }
 
   @Bean
+  public Queue menuOptionCreatedQueue() {
+    return new Queue(MENU_OPTION_CREATED_QUEUE);
+  }
+
+  @Bean
+  public Queue menuOptionUpdatedQueue() {
+    return new Queue(MENU_OPTION_UPDATED_QUEUE);
+  }
+
+  @Bean
+  public Queue menuOptionDeletedQueue() {
+    return new Queue(MENU_OPTION_DELETED_QUEUE);
+  }
+
+  @Bean
   public Binding userCreatedBinding(Queue userCreatedQueue, TopicExchange userTopic) {
     return BindingBuilder.bind(userCreatedQueue).to(userTopic).with(USER_CREATED_ROUTING_KEY);
   }
@@ -130,6 +158,21 @@ public class RabbitMQConfig {
   @Bean
   public Binding menuDeletedBinding(Queue menuDeletedQueue, TopicExchange menuTopic) {
     return BindingBuilder.bind(menuDeletedQueue).to(menuTopic).with(MENU_DELETED_ROUTING_KEY);
+  }
+
+  @Bean
+  public Binding menuOptionCreatedBinding(Queue menuOptionCreatedQueue, TopicExchange menuOptionTopic) {
+    return BindingBuilder.bind(menuOptionCreatedQueue).to(menuOptionTopic).with(MENU_OPTION_CREATED_ROUTING_KEY);
+  }
+
+  @Bean
+  public Binding menuOptionUpdatedBinding(Queue menuOptionUpdatedQueue, TopicExchange menuOptionTopic) {
+    return BindingBuilder.bind(menuOptionUpdatedQueue).to(menuOptionTopic).with(MENU_OPTION_UPDATED_ROUTING_KEY);
+  }
+
+  @Bean
+  public Binding menuOptionDeletedBinding(Queue menuOptionDeletedQueue, TopicExchange menuOptionTopic) {
+    return BindingBuilder.bind(menuOptionDeletedQueue).to(menuOptionTopic).with(MENU_OPTION_DELETED_ROUTING_KEY);
   }
 
   @Bean
