@@ -48,6 +48,7 @@ public class CartService {
     List<CartResponse> cartResponses = new ArrayList<CartResponse>();
 
     for (CartItem cartItem : cartItems) {
+      System.out.println(cartItem);
       Menu menu = menuRepository.findById(cartItem.getMenuId()).orElse(null);
       if (menu == null) {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Menu was not exist");
@@ -55,6 +56,7 @@ public class CartService {
       CartResponse cartResponse = new CartResponse();
       cartResponse.setMenu(menu);
       cartResponse.setQuantity(cartItem.getQuantity());
+      cartResponse.setOptionIds(cartItem.getOptionIds());
       cartResponses.add(cartResponse);
     }
 
