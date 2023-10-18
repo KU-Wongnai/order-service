@@ -15,16 +15,16 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 @Configuration
 public class RabbitMQConfig {
 
-  private final String USER_CREATED_QUEUE = "user.created.queue";
-  private final String USER_UPDATED_QUEUE = "user.updated.queue";
+  private final String USER_CREATED_QUEUE = "order.user.created.queue";
+  private final String USER_UPDATED_QUEUE = "order.user.updated.queue";
   private final String USER_CREATED_ROUTING_KEY = "user.created";
   private final String USER_UPDATED_ROUTING_KEY = "user.updated";
   private final String USER_TOPIC_EXCHANGE = "events.user";
 
   private final String RESTAURANT_TOPIC_EXCHANGE = "events.restaurant";
-  private final String RESTAURANT_CREATED_QUEUE = "restaurant.created.queue";
-  private final String RESTAURANT_UPDATED_QUEUE = "restaurant.updated.queue";
-  private final String RESTAURANT_DELETED_QUEUE = "restaurant.deleted.queue";
+  private final String RESTAURANT_CREATED_QUEUE = "order.restaurant.created.queue";
+  private final String RESTAURANT_UPDATED_QUEUE = "order.restaurant.updated.queue";
+  private final String RESTAURANT_DELETED_QUEUE = "order.restaurant.deleted.queue";
   private final String RESTAURANT_CREATED_ROUTING_KEY = "restaurant.created";
   private final String RESTAURANT_UPDATED_ROUTING_KEY = "restaurant.updated";
   private final String RESTAURANT_DELETED_ROUTING_KEY = "restaurant.deleted";
