@@ -17,6 +17,8 @@ import ku.cs.kuwongnai.cart.CartService;
 import ku.cs.kuwongnai.delivery.Delivery;
 import ku.cs.kuwongnai.delivery.DeliveryRepository;
 import ku.cs.kuwongnai.restaurant.Menu;
+import ku.cs.kuwongnai.restaurant.MenuOption;
+import ku.cs.kuwongnai.restaurant.MenuOptionRepository;
 import ku.cs.kuwongnai.restaurant.MenuRepository;
 import ku.cs.kuwongnai.restaurant.Restaurant;
 import ku.cs.kuwongnai.restaurant.RestaurantRepository;
@@ -37,6 +39,9 @@ public class OrderService {
 
   @Autowired
   private MenuRepository menuRepository;
+
+  @Autowired
+  private MenuOptionRepository menuOptionRepository;
 
   @Autowired
   private DeliveryRepository deliveryRepository;
@@ -92,7 +97,25 @@ public class OrderService {
       item.setQuantity(cartItem.getQuantity());
       item.setPrice(menu.getPrice());
 
-      totalPrice += menu.getPrice() * cartItem.getQuantity();
+      double totalPriceForItem = menu.getPrice();
+
+      for (Long optionId : cartItem.getOptionIds()) {
+        MenuOption option = menuOptionRepository.findById(optionId).orElseThrow();
+
+        OrderItemOption orderItemOption = new OrderItemOption();
+        orderItemOption.setCategory(option.getCategory());
+        orderItemOption.setName(option.getName());
+        orderItemOption.setPrice(option.getPrice());
+
+        orderItemOption.setOrderItem(item);
+        item.getOrderItemOption().add(orderItemOption);
+
+        totalPriceForItem += option.getPrice();
+      }
+
+      item.setTotalPrice(totalPriceForItem);
+
+      totalPrice += totalPriceForItem * cartItem.getQuantity();
 
       PurchaseOrder order = restaurantOrder.get(restaurant);
 
@@ -201,7 +224,7 @@ public class OrderService {
   }
 
   public List<PurchaseOrder> getRestaurantOrders(Long restaurantID) {
-      return orderRepository.findByRestaurantId(restaurantID);
+    return orderRepository.findByRestaurantId(restaurantID);
   }
 
   public PurchaseOrder getOrder(UUID orderID) {
