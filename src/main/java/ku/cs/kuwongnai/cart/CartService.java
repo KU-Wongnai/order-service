@@ -12,6 +12,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.annotation.PostConstruct;
 import ku.cs.kuwongnai.restaurant.Menu;
+import ku.cs.kuwongnai.restaurant.MenuOption;
+import ku.cs.kuwongnai.restaurant.MenuOptionRepository;
 import ku.cs.kuwongnai.restaurant.MenuRepository;
 
 @Service
@@ -25,6 +27,9 @@ public class CartService {
 
   @Autowired
   private MenuRepository menuRepository;
+
+  @Autowired
+  private MenuOptionRepository menuOptionRepository;
 
   @PostConstruct
   private void init() {
@@ -50,13 +55,23 @@ public class CartService {
     for (CartItem cartItem : cartItems) {
       System.out.println(cartItem);
       Menu menu = menuRepository.findById(cartItem.getMenuId()).orElse(null);
+
       if (menu == null) {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Menu was not exist");
       }
+
       CartResponse cartResponse = new CartResponse();
       cartResponse.setMenu(menu);
       cartResponse.setQuantity(cartItem.getQuantity());
-      cartResponse.setOptionIds(cartItem.getOptionIds());
+
+      for (Long optionId : cartItem.getOptionIds()) {
+        MenuOption menuOption = menuOptionRepository.findById(optionId).orElse(null);
+        if (menuOption == null) {
+          throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Menu option was not exist");
+        }
+        cartResponse.getOptions().add(menuOption);
+      }
+
       cartResponses.add(cartResponse);
     }
 
