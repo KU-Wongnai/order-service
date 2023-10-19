@@ -204,6 +204,10 @@ public class OrderService {
       return orderRepository.findByRestaurantId(restaurantID);
   }
 
+  public PurchaseOrder getOrder(UUID orderID) {
+      return orderRepository.findById(orderID).orElseThrow();
+  }
+
   public List<PurchaseOrder> getAllOrders() {
     return orderRepository.findAll();
   }

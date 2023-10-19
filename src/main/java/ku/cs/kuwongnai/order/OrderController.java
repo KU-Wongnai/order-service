@@ -56,6 +56,11 @@ public class OrderController {
     return orderService.getMyBill(Long.parseLong(userId), billId);
   }
 
+  @GetMapping("/order/{orderID}")
+  public PurchaseOrder getOrder(@AuthenticationPrincipal Jwt jwt, @PathVariable UUID orderID) {
+      return orderService.getOrder(orderID);
+  }
+
   @GetMapping("/orders/{orderID}")
   public PurchaseOrder updateOrderStatus(@AuthenticationPrincipal Jwt jwt, @PathVariable UUID orderID,
       @RequestParam OrderStatus status) {
