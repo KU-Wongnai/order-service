@@ -16,12 +16,12 @@ import ku.cs.kuwongnai.cart.CartItem;
 import ku.cs.kuwongnai.cart.CartService;
 import ku.cs.kuwongnai.delivery.Delivery;
 import ku.cs.kuwongnai.delivery.DeliveryRepository;
-import ku.cs.kuwongnai.restaurant.Menu;
-import ku.cs.kuwongnai.restaurant.MenuOption;
-import ku.cs.kuwongnai.restaurant.MenuOptionRepository;
-import ku.cs.kuwongnai.restaurant.MenuRepository;
 import ku.cs.kuwongnai.restaurant.Restaurant;
 import ku.cs.kuwongnai.restaurant.RestaurantRepository;
+import ku.cs.kuwongnai.restaurant.menu.Menu;
+import ku.cs.kuwongnai.restaurant.menu.MenuRepository;
+import ku.cs.kuwongnai.restaurant.menu.option.MenuOption;
+import ku.cs.kuwongnai.restaurant.menu.option.MenuOptionRepository;
 import ku.cs.kuwongnai.user.User;
 import ku.cs.kuwongnai.user.UserRepository;
 
@@ -228,7 +228,7 @@ public class OrderService {
   }
 
   public PurchaseOrder getOrder(UUID orderID) {
-      return orderRepository.findById(orderID).orElseThrow();
+    return orderRepository.findById(orderID).orElseThrow();
   }
 
   public List<PurchaseOrder> getAllOrders() {

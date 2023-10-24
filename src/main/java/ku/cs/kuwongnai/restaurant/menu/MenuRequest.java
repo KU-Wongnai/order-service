@@ -1,4 +1,4 @@
-package ku.cs.kuwongnai.restaurant;
+package ku.cs.kuwongnai.restaurant.menu;
 
 import lombok.Data;
 

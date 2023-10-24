@@ -1,4 +1,4 @@
-package ku.cs.kuwongnai.restaurant;
+package ku.cs.kuwongnai.restaurant.menu;
 
 import java.util.List;
 
@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import ku.cs.kuwongnai.order.OrderItem;
+import ku.cs.kuwongnai.restaurant.Restaurant;
 import lombok.Data;
 
 @Entity

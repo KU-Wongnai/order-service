@@ -1,7 +1,10 @@
-package ku.cs.kuwongnai.restaurant;
+package ku.cs.kuwongnai.restaurant.menu;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import ku.cs.kuwongnai.restaurant.Restaurant;
+import ku.cs.kuwongnai.restaurant.RestaurantRepository;
 
 @Service
 public class MenuService {

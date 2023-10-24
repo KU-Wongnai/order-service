@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import ku.cs.kuwongnai.order.PurchaseOrder;
+import ku.cs.kuwongnai.restaurant.menu.Menu;
 import lombok.Data;
 
 @Entity

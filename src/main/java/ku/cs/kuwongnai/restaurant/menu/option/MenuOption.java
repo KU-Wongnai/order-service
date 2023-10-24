@@ -1,11 +1,7 @@
-package ku.cs.kuwongnai.restaurant;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+package ku.cs.kuwongnai.restaurant.menu.option;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Entity

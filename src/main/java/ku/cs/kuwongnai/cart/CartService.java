@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.annotation.PostConstruct;
-import ku.cs.kuwongnai.restaurant.Menu;
-import ku.cs.kuwongnai.restaurant.MenuOption;
-import ku.cs.kuwongnai.restaurant.MenuOptionRepository;
-import ku.cs.kuwongnai.restaurant.MenuRepository;
+import ku.cs.kuwongnai.restaurant.menu.Menu;
+import ku.cs.kuwongnai.restaurant.menu.MenuRepository;
+import ku.cs.kuwongnai.restaurant.menu.option.MenuOption;
+import ku.cs.kuwongnai.restaurant.menu.option.MenuOptionRepository;
 
 @Service
 public class CartService {

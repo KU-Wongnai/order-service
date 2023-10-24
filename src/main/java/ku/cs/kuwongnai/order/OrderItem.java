@@ -13,7 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import ku.cs.kuwongnai.restaurant.Menu;
+import ku.cs.kuwongnai.restaurant.menu.Menu;
 import lombok.Data;
 
 @Entity

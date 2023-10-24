@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import ku.cs.kuwongnai.restaurant.Menu;
-import ku.cs.kuwongnai.restaurant.MenuOption;
+import ku.cs.kuwongnai.restaurant.menu.Menu;
+import ku.cs.kuwongnai.restaurant.menu.option.MenuOption;
 import lombok.Data;
 
 @Data
