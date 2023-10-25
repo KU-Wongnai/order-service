@@ -1,43 +1,27 @@
 version: "3.9"
 services:
-  mysql:
-    image: mysql
-    restart: always
+  order_service_server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: order_service_server
+    restart: on-failure
+    ports:
+      - 8094:8094
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: order
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-    ports:
-      - 3309:3306
-    volumes:
-      - db_data:/var/lib/mysql
+      SPRING_DATASOURCE_URL: "${SPRING_DATASOURCE_URL:-jdbc:mysql://mysql:3306/order_service}"
+      SPRING_DATASOURCE_USERNAME: "${SPRING_DATASOURCE_USERNAME:-root}"
+      SPRING_DATASOURCE_PASSWORD: "${SPRING_DATASOURCE_PASSWORD:-root}"
+      SPRING_RABBITMQ_HOST: "${RABBITMQ_HOST:-rabbitmq}"
+      SPRING_RABBITMQ_PORT: "${RABBITMQ_PORT:-5672}"
+      SPRING_RABBITMQ_USERNAME: "${RABBITMQ_USERNAME:-user}"
+      SPRING_RABBITMQ_PASSWORD: "${RABBITMQ_PASSWORD:-password}"
+      JWT_SECRET: ${JWT_SECRET}
+      SPRING_DATA_REDIS_HOST: "${SPRING_DATA_REDIS_HOST:-redis}"
+      SPRING_DATA_REDIS_PORT: "${SPRING_DATA_REDIS_PORT:-6379}"
+    networks:
+      - ku-wongnai_ku-wongnai
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    restart: always
-    environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: root
-    ports:
-      - 8080:80
-    depends_on:
-      - mysql
-
-  redis:
-    image: "redis:alpine"
-    ports:
-      - "6379:6379"
-    volumes:
-      - "sail-redis:/data"
-    healthcheck:
-      test:
-        - CMD
-        - redis-cli
-        - ping
-      retries: 3
-      timeout: 5s
-volumes:
-  db_data:
-  sail-redis:
+networks:
+  ku-wongnai_ku-wongnai:
+    external: true
