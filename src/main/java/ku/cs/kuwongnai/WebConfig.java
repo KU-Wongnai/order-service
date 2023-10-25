@@ -13,8 +13,13 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
 import reactor.netty.http.client.HttpClient;
 
+import org.springframework.beans.factory.annotation.Value;
+
 @Configuration
 public class WebConfig {
+
+  @Value("${payment.url}")
+  private String paymentUrl;
 
   @Bean
   public WebClient webClient() {
@@ -27,7 +32,7 @@ public class WebConfig {
 
     WebClient webClient = WebClient.builder()
         .clientConnector(new ReactorClientHttpConnector(httpClient))
-        .baseUrl("http://localhost:8095/api")
+        .baseUrl(paymentUrl)
         .build();
 
     return webClient;

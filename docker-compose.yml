@@ -19,6 +19,7 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       SPRING_DATA_REDIS_HOST: "${SPRING_DATA_REDIS_HOST:-redis}"
       SPRING_DATA_REDIS_PORT: "${SPRING_DATA_REDIS_PORT:-6379}"
+      PAYMENT_URL: "${PAYMENT_URL:-http://host.docker.internal:8095/api}"
     networks:
       - ku-wongnai_ku-wongnai
 
