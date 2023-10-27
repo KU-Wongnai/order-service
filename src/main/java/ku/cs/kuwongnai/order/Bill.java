@@ -59,4 +59,11 @@ public class Bill {
   @Column(name = "updated_at", nullable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
   private LocalDateTime updatedAt;
 
+  public void calculateTotalPrice() {
+    totalPrice = 0;
+    for (PurchaseOrder order : orders) {
+      totalPrice += order.calculateTotalPrice();
+    }
+  }
+
 }

@@ -69,4 +69,24 @@ public class PurchaseOrder {
   @UpdateTimestamp
   @Column(name = "updated_at", nullable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
   private LocalDateTime updatedAt;
+
+  /**
+   * Calculate total price of all items in the order.
+   * 
+   * @return total price of all items in the order.
+   */
+  public double calculateTotalPrice() {
+    double totalPrice = 0;
+    for (OrderItem item : orderItems) {
+      totalPrice += item.getTotalPrice();
+    }
+    return totalPrice;
+  }
+
+  public void setBill(Bill bill) {
+    this.bill = bill;
+    if (!bill.getOrders().contains(this)) {
+      bill.getOrders().add(this);
+    }
+  }
 }

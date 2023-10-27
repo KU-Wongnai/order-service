@@ -25,4 +25,11 @@ public class OrderItemOption {
   @JoinColumn(name = "order_item_id")
   @JsonIgnore
   private OrderItem orderItem;
+
+  public void setOrderItem(OrderItem orderItem) {
+    this.orderItem = orderItem;
+    if (!orderItem.getOrderItemOption().contains(this)) {
+      orderItem.getOrderItemOption().add(this);
+    }
+  }
 }

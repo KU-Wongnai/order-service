@@ -65,17 +65,9 @@ public class OrderService {
     }
 
     Map<Restaurant, PurchaseOrder> restaurantOrder = new HashMap<>();
-    Bill bill = new Bill();
 
     User user = userRepository.findById(Long.parseLong(userId)).orElseThrow();
-
-    bill.setUser(user);
-    bill.setDeliveryAddress(paymentRequest.getDeliveryAddress());
-    bill.setContactInfo(paymentRequest.getPhoneNumber());
-    // Create a receipt for this orders
-    bill = billRepository.save(bill);
-
-    double totalPrice = 0;
+    final Bill bill = createBill(user, paymentRequest);
 
     // Create orders with order items base on the item in cart, for every
     // restaurants user order
@@ -92,12 +84,9 @@ public class OrderService {
       }
 
       OrderItem item = new OrderItem();
-
       item.setMenu(menu);
       item.setQuantity(cartItem.getQuantity());
       item.setPrice(menu.getPrice());
-
-      double totalPriceForItem = menu.getPrice();
 
       for (Long optionId : cartItem.getOptionIds()) {
         MenuOption option = menuOptionRepository.findById(optionId).orElseThrow();
@@ -108,39 +97,33 @@ public class OrderService {
         orderItemOption.setPrice(option.getPrice());
 
         orderItemOption.setOrderItem(item);
-        item.getOrderItemOption().add(orderItemOption);
-
-        totalPriceForItem += option.getPrice();
       }
 
-      item.setTotalPrice(totalPriceForItem);
+      item.calculateTotalPrice();
 
-      totalPrice += totalPriceForItem * cartItem.getQuantity();
-
-      PurchaseOrder order = restaurantOrder.get(restaurant);
-
-      // Group items from the same restaurant to become one order
-      if (order == null) {
-
-        order = new PurchaseOrder();
-        order.setRestaurant(restaurant);
-        order.setBill(bill);
-        order.setUser(user);
-        bill.getOrders().add(order);
-
-        restaurantOrder.put(restaurant, order);
-
-        System.out.println("Create new order for restaurant id = " + restaurant.getId());
-      }
+      PurchaseOrder order = restaurantOrder.computeIfAbsent(restaurant, r -> {
+        PurchaseOrder o = new PurchaseOrder();
+        o.setRestaurant(r);
+        o.setBill(bill);
+        o.setUser(user);
+        return o;
+      });
 
       item.setOrder(order);
-      order.getOrderItems().add(item);
     }
 
-    bill.setTotalPrice(totalPrice);
+    bill.calculateTotalPrice();
     Bill record = billRepository.save(bill);
 
     return record;
+  }
+
+  private Bill createBill(User user, PaymentRequest paymentRequest) {
+    Bill bill = new Bill();
+    bill.setUser(user);
+    bill.setDeliveryAddress(paymentRequest.getDeliveryAddress());
+    bill.setContactInfo(paymentRequest.getPhoneNumber());
+    return billRepository.save(bill);
   }
 
   public List<Bill> getAllMyBills(Long userId) {

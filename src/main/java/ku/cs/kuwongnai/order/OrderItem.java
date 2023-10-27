@@ -42,11 +42,25 @@ public class OrderItem {
   /**
    * Total price of the food plus options.
    */
-  private double totalPrice;
+  private double totalPrice = 0;
 
   @JsonBackReference
   @ManyToOne
   @JoinColumn(name = "order_id")
   private PurchaseOrder order;
+
+  public void calculateTotalPrice() {
+    totalPrice = price * quantity;
+    for (OrderItemOption option : orderItemOption) {
+      totalPrice += option.getPrice();
+    }
+  }
+
+  public void setOrder(PurchaseOrder order) {
+    this.order = order;
+    if (!order.getOrderItems().contains(this)) {
+      order.getOrderItems().add(this);
+    }
+  }
 
 }
