@@ -11,7 +11,7 @@ public class UserReceiver {
   private UserService userService;
 
   @RabbitListener(queues = "#{userCreatedQueue.name}")
-  public void handleUserCreatedMessage(User user) {
+  public void handleUserCreatedMessage(UserRequest user) {
     // Handle user created
     userService.create(user);
     System.out.println("From User Service : User has been created");
@@ -19,7 +19,7 @@ public class UserReceiver {
   }
 
   @RabbitListener(queues = "#{userUpdatedQueue.name}")
-  public void handleUserUpdatedMessage(User user) {
+  public void handleUserUpdatedMessage(UserRequest user) {
     // Handle user updated message
     userService.update(user);
     System.out.println("From User Service : User has been updated");
