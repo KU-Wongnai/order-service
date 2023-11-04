@@ -77,6 +77,11 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.rabbitmq</groupId>
+			<artifactId>amqp-client</artifactId>
+        	<version>5.14.0</version>
+    </dependency>
 	</dependencies>
 
 	<build>

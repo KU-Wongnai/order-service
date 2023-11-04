@@ -17,9 +17,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import ku.cs.kuwongnai.notification.NotificationSender;
+
 @RestController
 @RequestMapping("/api")
 public class OrderController {
+
+  @Autowired
+  private NotificationSender notificationSender;
 
   @Autowired
   private OrderService orderService;
@@ -36,6 +41,7 @@ public class OrderController {
       orderService.chargeCard(jwt, bill, paymentRequest);
 
       orderService.confirmOrder(userId, bill);
+      notificationSender.sendInAppUserSuccessPayment(userId);
     } catch (Exception e) {
       orderService.cancelOrder(bill);
 
