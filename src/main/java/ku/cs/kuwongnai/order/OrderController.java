@@ -65,7 +65,7 @@ public class OrderController {
 
   @GetMapping("/order/{orderID}")
   public PurchaseOrder getOrder(@AuthenticationPrincipal Jwt jwt, @PathVariable UUID orderID) {
-      return orderService.getOrder(orderID);
+    return orderService.getOrder(orderID);
   }
 
   @PutMapping("/orders/{orderID}")
@@ -77,12 +77,24 @@ public class OrderController {
   @GetMapping("/orders/restaurant/{RestaurantID}")
   public List<PurchaseOrder> getRestaurantOrders(@AuthenticationPrincipal Jwt jwt,
       @PathVariable Long RestaurantID) {
-      return orderService.getRestaurantOrders(RestaurantID);
+    return orderService.getRestaurantOrders(RestaurantID);
   }
 
   @GetMapping("/orders")
   public List<PurchaseOrder> getAllOrders(@AuthenticationPrincipal Jwt jwt) {
-      return orderService.getAllOrders();
+    return orderService.getAllOrders();
+  }
+
+  @GetMapping("/orders/me")
+  public List<PurchaseOrder> getMyOrders(@AuthenticationPrincipal Jwt jwt) {
+    String userId = (String) jwt.getClaims().get("sub");
+    return orderService.getMyOrders(Long.parseLong(userId));
+  }
+
+  @GetMapping("/orders/me/{status}")
+  public List<PurchaseOrder> getMyOrders(@AuthenticationPrincipal Jwt jwt, @PathVariable OrderStatus status) {
+    String userId = (String) jwt.getClaims().get("sub");
+    return orderService.getMyOrders(Long.parseLong(userId), status);
   }
 
 }

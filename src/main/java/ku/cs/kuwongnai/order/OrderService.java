@@ -217,4 +217,12 @@ public class OrderService {
   public List<PurchaseOrder> getAllOrders() {
     return orderRepository.findAll();
   }
+
+  public List<PurchaseOrder> getMyOrders(Long userId) {
+    return orderRepository.findByUserId(userId);
+  }
+
+  public List<PurchaseOrder> getMyOrders(Long userId, OrderStatus status) {
+    return orderRepository.findByUserIdAndStatus(userId, status);
+  }
 }

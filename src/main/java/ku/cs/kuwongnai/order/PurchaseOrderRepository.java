@@ -10,4 +10,8 @@ import org.springframework.stereotype.Repository;
 public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder, UUID> {
 
     List<PurchaseOrder> findByRestaurantId(Long restaurantID);
+
+    List<PurchaseOrder> findByUserId(Long userId);
+
+    List<PurchaseOrder> findByUserIdAndStatus(Long userId, OrderStatus status);
 }
