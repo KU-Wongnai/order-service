@@ -2,10 +2,13 @@ package ku.cs.kuwongnai.user;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Id;
 import lombok.Data;
 
 @Data
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserRequest {
   @Id
   private Long id;

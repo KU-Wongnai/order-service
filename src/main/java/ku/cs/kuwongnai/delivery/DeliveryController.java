@@ -56,7 +56,8 @@ public class DeliveryController {
     Long riderId = Long.parseLong((String) jwt.getClaim("sub"));
     try {
       notificationSender.sendInAppRiderNewOrder(riderId.toString());
-      notificationSender.sendInAppUserDeliveryOrder(deliveryService.getDelivery(deliveryId).getOrder().getUser().getId().toString());
+      notificationSender
+          .sendInAppUserDeliveryOrder(deliveryService.getDelivery(deliveryId).getOrder().getUser().getId().toString());
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -68,7 +69,8 @@ public class DeliveryController {
     Long riderId = Long.parseLong((String) jwt.getClaim("sub"));
     try {
       notificationSender.sendInAppRiderOrderFinished(riderId.toString());
-      notificationSender.sendInAppUserDeliveryFinished(deliveryService.getDelivery(deliveryId).getOrder().getUser().getId().toString());
+      notificationSender.sendInAppUserDeliveryFinished(
+          deliveryService.getDelivery(deliveryId).getOrder().getUser().getId().toString());
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -80,11 +82,18 @@ public class DeliveryController {
     Long riderId = Long.parseLong((String) jwt.getClaim("sub"));
     try {
       notificationSender.sendInAppRiderOrderCanceled(riderId.toString());
-      notificationSender.sendInAppUserOrderCanceled(deliveryService.getDelivery(deliveryId).getOrder().getUser().getId().toString());
+      notificationSender
+          .sendInAppUserOrderCanceled(deliveryService.getDelivery(deliveryId).getOrder().getUser().getId().toString());
     } catch (Exception e) {
       e.printStackTrace();
     }
     return deliveryService.cancelDelivery(deliveryId, riderId);
+  }
+
+  @GetMapping("/me/earning")
+  public Pocket getEarning(@AuthenticationPrincipal Jwt jwt) {
+    Long riderId = Long.parseLong((String) jwt.getClaim("sub"));
+    return deliveryService.calculateTotalEarning(riderId);
   }
 
 }

@@ -97,4 +97,21 @@ public class DeliveryService {
 
     return deliveryRepository.save(delivery);
   }
+
+  public Pocket calculateTotalEarning(Long riderId) {
+    List<Delivery> deliveries = deliveryRepository.findByRiderIdAndStatus(riderId, DeliveryStatus.DELIVERED);
+
+    Double totalEarning = 0.0;
+
+    for (Delivery delivery : deliveries) {
+      totalEarning += delivery.getDeliveryFee();
+    }
+
+    Pocket pocket = new Pocket();
+    pocket.setTotalIncome(totalEarning);
+    pocket.setTransferable(totalEarning);
+
+    return pocket;
+  }
+
 }

@@ -30,6 +30,7 @@ public class Delivery {
 
   private String deliveryAddress;
   private String contactInfo;
+  private Double deliveryFee = 40.0; // 40 baht
 
   @Enumerated(EnumType.STRING)
   private DeliveryStatus status = DeliveryStatus.PENDING;
