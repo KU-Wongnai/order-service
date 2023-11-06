@@ -51,6 +51,7 @@ public class PurchaseOrder {
 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "delivery_id", referencedColumnName = "id")
+  @JsonManagedReference
   private Delivery delivery;
 
   @JsonBackReference

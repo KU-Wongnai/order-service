@@ -2,6 +2,8 @@ package ku.cs.kuwongnai.delivery;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.annotation.Nullable;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -37,6 +39,7 @@ public class Delivery {
 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "order_id", referencedColumnName = "id")
+  @JsonBackReference
   private PurchaseOrder order;
 
 }

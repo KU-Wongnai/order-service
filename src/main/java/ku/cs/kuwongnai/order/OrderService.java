@@ -211,7 +211,12 @@ public class OrderService {
   }
 
   public PurchaseOrder getOrder(UUID orderID) {
-    return orderRepository.findById(orderID).orElseThrow();
+    PurchaseOrder order = orderRepository.findById(orderID).orElseThrow();
+    Delivery delivery = deliveryRepository.findByOrderId(orderID);
+
+    order.setDelivery(delivery);
+
+    return order;
   }
 
   public List<PurchaseOrder> getAllOrders() {
