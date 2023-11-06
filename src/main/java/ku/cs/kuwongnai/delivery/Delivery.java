@@ -39,7 +39,7 @@ public class Delivery {
 
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "order_id", referencedColumnName = "id")
-  @JsonBackReference
+  // @JsonBackReference
   private PurchaseOrder order;
 
 }

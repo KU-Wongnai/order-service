@@ -218,6 +218,7 @@ public class OrderService {
     PurchaseOrder order = orderRepository.findById(orderID).orElseThrow();
     Delivery delivery = deliveryRepository.findByOrderId(orderID);
 
+    delivery.setOrder(null);
     order.setDelivery(delivery);
 
     return order;

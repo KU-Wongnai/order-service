@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import ku.cs.kuwongnai.order.PurchaseOrder;
+
 @Service
 public class DeliveryService {
 
@@ -35,7 +37,13 @@ public class DeliveryService {
   }
 
   public Delivery getDelivery(UUID deliveryId) {
-    return deliveryRepository.findById(deliveryId).orElseThrow();
+    Delivery delivery = deliveryRepository.findById(deliveryId).orElseThrow();
+    PurchaseOrder order = delivery.getOrder();
+    // System.out.println("Order = " + order);
+    // PurchaseOrder order = orderRepository.findById(deliveryId).orElseThrow();
+    // delivery.setOrder(order);
+    // System.out.println(delivery);
+    return delivery;
   }
 
   public Delivery assignDelivery(UUID deliveryId, Long riderId) {
