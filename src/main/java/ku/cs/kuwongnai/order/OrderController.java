@@ -80,6 +80,12 @@ public class OrderController {
     return orderService.getRestaurantOrders(RestaurantID);
   }
 
+  @GetMapping("/orders/restaurant/{RestaurantID}/{status}")
+  public List<PurchaseOrder> getRestaurantOrders(@AuthenticationPrincipal Jwt jwt,
+      @PathVariable Long RestaurantID, @PathVariable OrderStatus status) {
+    return orderService.getRestaurantOrders(RestaurantID, status);
+  }
+
   @GetMapping("/orders")
   public List<PurchaseOrder> getAllOrders(@AuthenticationPrincipal Jwt jwt) {
     return orderService.getAllOrders();

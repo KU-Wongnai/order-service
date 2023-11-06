@@ -210,6 +210,10 @@ public class OrderService {
     return orderRepository.findByRestaurantId(restaurantID);
   }
 
+  public List<PurchaseOrder> getRestaurantOrders(Long restaurantID, OrderStatus status) {
+    return orderRepository.findByRestaurantIdAndStatus(restaurantID, status);
+  }
+
   public PurchaseOrder getOrder(UUID orderID) {
     PurchaseOrder order = orderRepository.findById(orderID).orElseThrow();
     Delivery delivery = deliveryRepository.findByOrderId(orderID);

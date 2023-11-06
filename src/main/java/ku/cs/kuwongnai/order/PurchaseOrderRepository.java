@@ -11,6 +11,8 @@ public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder, UU
 
     List<PurchaseOrder> findByRestaurantId(Long restaurantID);
 
+    List<PurchaseOrder> findByRestaurantIdAndStatus(Long restaurantID, OrderStatus status);
+
     List<PurchaseOrder> findByUserId(Long userId);
 
     List<PurchaseOrder> findByUserIdAndStatus(Long userId, OrderStatus status);
